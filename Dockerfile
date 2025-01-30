@@ -1,5 +1,8 @@
+FROM alpine:latest AS builder
+
+RUN apk add --no-cache curl kubectl
+
 FROM gcr.io/kaniko-project/executor:latest
 
-RUN apk add --no-cache curl
-
-USER 1000
+COPY --from=builder /usr/bin/curl /usr/bin/curl
+COPY --from=builder /usr/bin/kubectl /usr/bin/kubectl
